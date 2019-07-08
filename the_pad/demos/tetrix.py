@@ -1,6 +1,6 @@
 from ili934xhax import ILI9341, color565, color565n
-from machine import SPI, Pin
-import mcp
+from machine import SPI, Pin, I2C
+import mcpnew
 import framebuf
 import random
 
@@ -18,6 +18,8 @@ display = ILI9341(spi,
 I2C_SCL = 27
 I2C_SDA = 32
 
+i2c = I2C(scl = Pin(I2C_SCL), sda = Pin(I2C_SDA))
+
 BUTTON_LEFT = 5
 BUTTON_RIGHT = 6
 BUTTON_UP = 7
@@ -30,7 +32,7 @@ PIN_DOWN = 11 #gucci
 
 pinz = [PIN_LEFT, PIN_RIGHT, PIN_UP, PIN_DOWN, BUTTON_LEFT, BUTTON_RIGHT, BUTTON_UP, BUTTON_DOWN]
 
-io = mcp.MCP23017(address=0x20, gpioScl=I2C_SCL, gpioSda=I2C_SDA) # 32
+io = mcpnew.MCP23017(i2c, address=0x20)#, gpioScl=I2C_SCL, gpioSda=I2C_SDA) # 32
 
 class area(object):
     def __init__(self, disp):
@@ -404,7 +406,7 @@ class area(object):
 
 def main():
     for a in pinz:
-        io.setup(a, mcp.IN)
+        io.setup(a, mcpnew.IN)
         io.pullup(a, True)
 
     display.erase()
