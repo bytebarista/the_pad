@@ -131,16 +131,16 @@ while True:
     if not io.input(4):
         if selection == 0:
             import tetrix
-            tetrix.main()
+            tetrix.run()
 
         if selection == 1:
             import snek
-            snek.main()
+            snek.run()
 
         if selection == 2:
             import temperature
-            temperature.main()
+            temperature.run()
 
         if selection == 3:
             import rtracnew
-            rtracnew.main()
+            rtracnew.run()

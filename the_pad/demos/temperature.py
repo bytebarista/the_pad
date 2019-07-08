@@ -36,7 +36,7 @@ pinz = [PIN_LEFT, PIN_RIGHT, PIN_UP, PIN_DOWN, BUTTON_LEFT, BUTTON_RIGHT, BUTTON
 io = mcpnew.MCP23017(i2c, address=0x20)#, gpioScl=I2C_SCL, gpioSda=I2C_SDA) # 32
 
 
-def main():
+def run():
     for a in pinz:
         io.setup(a, mcpnew.IN)
         io.pullup(a, True)

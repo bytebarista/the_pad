@@ -24,10 +24,10 @@ BUTTON_RIGHT = 6
 BUTTON_UP = 7
 BUTTON_DOWN = 4
 
-PIN_LEFT = 9 #fucked
-PIN_RIGHT = 10 #gucci
-PIN_UP = 8 #gucci
-PIN_DOWN = 11 #gucci
+PIN_LEFT = 9
+PIN_RIGHT = 10
+PIN_UP = 8
+PIN_DOWN = 11
 
 DIR_STOPPED = 0
 DIR_LEFT = 1
@@ -231,7 +231,7 @@ class player(object):
         self.nextdir = newdir
 
 
-def main():
+def run():
 
     for a in pinz:
         io.setup(a, mcpnew.IN)

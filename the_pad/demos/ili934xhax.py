@@ -49,13 +49,13 @@ _NGAMCTRL = const(0xe1) # Negative Gamma Control
 
 _CHUNK = const(1024) #maximum number of pixels per spi write
 
-def color565(r, g, b):
+def color565(r, g, b): # returns swapped 16 bit color - for use with micropython framebuf module
     return swap16((r & 0xf8) << 8 | (g & 0xfc) << 3 | b >> 3)
 
 def swap16(i):
     return ustruct.unpack("<H", ustruct.pack(">H", i))[0]
 
-def color565n(r, g, b):
+def color565n(r, g, b): # returns normal 16 bit color - for use with display driver directly
     return (r & 0xf8) << 8 | (g & 0xfc) << 3 | b >> 3
 
 class ILI9341:

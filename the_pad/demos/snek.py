@@ -230,7 +230,7 @@ class snake(object):
             self.nextdirection = direction
 
 
-def main():
+def run():
     io = mcpnew.MCP23017(i2c, address=0x20) # 32
 
     for a in pinz:

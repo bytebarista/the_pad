@@ -25,14 +25,14 @@ BUTTON_RIGHT = 6
 BUTTON_UP = 7
 BUTTON_DOWN = 4
 
-PIN_LEFT = 9 #gucci
-PIN_RIGHT = 10 #gucci
-PIN_UP = 8 #gucci
-PIN_DOWN = 11 #gucci
+PIN_LEFT = 9
+PIN_RIGHT = 10
+PIN_UP = 8
+PIN_DOWN = 11
 
 pinz = [PIN_LEFT, PIN_RIGHT, PIN_UP, PIN_DOWN, BUTTON_LEFT, BUTTON_RIGHT, BUTTON_UP, BUTTON_DOWN]
 
-io = mcpnew.MCP23017(i2c, address=0x20)#, gpioScl=I2C_SCL, gpioSda=I2C_SDA) # 32
+io = mcpnew.MCP23017(i2c, address=0x20)
 
 class area(object):
     def __init__(self, disp):
@@ -404,7 +404,7 @@ class area(object):
 
 
 
-def main():
+def run():
     for a in pinz:
         io.setup(a, mcpnew.IN)
         io.pullup(a, True)
