@@ -17,7 +17,7 @@ Regardless, when you are done with bulk pasting; finish with **ctrl + d** which 
 
 # General-purpose Input/Output ([GPIO](https://en.wikipedia.org/wiki/General-purpose_input/output))
 
-## Switching pin output on/off
+### Switching pin output on/off
 
 Turn your controller over and on the back you'll find the microcontroller.
 
@@ -35,7 +35,7 @@ p.off()
 
 If you wan't to turn it back on just write **p.on()** in the interactive session
 
-## Dimming the LED
+### Dimming the LED
 
 Instead of having the Pin be either on or off all the time, we can instead use Pulse Width Modulation ([PWM](https://docs.micropython.org/en/latest/esp32/quickref.html#pwm-pulse-width-modulation)) to rapidly turn the Pin on and off continuously. PWM is commonly used to adjust the intensity of LEDs.
 
@@ -103,7 +103,7 @@ from machine import Pin, SPI
 spi = SPI(2, 40000000, miso=Pin(19), mosi=Pin(23), sck=Pin(18))
 ```
 
-## MicroSD reader
+### MicroSD reader
 
 Given that you have a microSD card on the controller.
 
@@ -139,7 +139,7 @@ with open('/sd/test.txt', 'r') as f:
     print(f.read())
 ```
 
-## The Display ([official](https://github.com/jeffmer/micropython-ili9341), [modified specifically for our display](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/ili934xhax.py))
+### The Display ([official](https://github.com/jeffmer/micropython-ili9341), [modified specifically for our display](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/ili934xhax.py))
 
 Note that the ili934xhax.py also requires glcdfont.py.
 
@@ -216,7 +216,7 @@ i2c = I2C(scl = Pin(27), sda = Pin(32))
 
 [More detailed information](https://docs.micropython.org/en/latest/esp32/quickref.html#i2c-bus)
 
-## GPIO Extender
+### GPIO Extender
 
 The buttons and d-pad on the device are all connected through the GPIO extender, which communicates via I2C
 
@@ -262,7 +262,7 @@ while True:
 
 
 
-## BME280 environmental sensor
+### BME280 environmental sensor
 
 The BME280 is able to measure temperature, humidity and atmospheric pressure.
 
@@ -291,7 +291,7 @@ humidity = bmevals[2] / 1024 # humidity in percent
 ```
 
 
-## MPU-9250 motion sensor
+### MPU-9250 motion sensor
 
 The MPU-9250 is a 9-axis motion sensor. To setup the component:
 
@@ -305,7 +305,7 @@ The unit can measure various things, and will return them as a tuple containing 
 ```python
 (ax, ay, az) = mpu.acceleration # acceleration in m/s^2
 (gx, gy, gz) = mpu.gyro         # gyro values in rad/s
-(gx, gy, gz) = mpu.magnetic     # magnetic field values in µ-Tesla
+(mx, my, mz) = mpu.magnetic     # magnetic field values in µ-Tesla
 ```
 
 ### Display touch
@@ -315,7 +315,7 @@ The display has touch functionality through I2C. However, no micropython driver 
 
 # Analogue output and input
 
-## The Speaker
+### The Speaker
 
 The device has am inbuilt speaker, which takes an analogue signal to produce sound.
 
@@ -343,7 +343,7 @@ for i in range(9999999):
     dac.write(buf[i % bl])
 ```
 
-## Microphone
+### Microphone
 
 The device also has a microphone. It is kind of the opposite of the speaker as it produces an analogue signal which then has to be converted to digital to be read by the microcontroller.
 
