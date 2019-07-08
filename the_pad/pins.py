@@ -1,0 +1,34 @@
+# SPI
+SPI_CLK = 18
+SPI_DATA = 4
+SPI_MISO = 19
+SPI_MOSI = 23
+
+# Display
+TFT_CS = 0
+TFT_DC = 15
+TFT_RST = 5
+
+# SD CARD
+SDCARD_CS = 14
+
+# LEDs
+LEDS = 4
+LED_CLK = 13
+
+# GPIO / I2C
+I2C_SCL = 27
+I2C_SDA = 32
+
+# Thumbslide
+THUMBSLIDE_X = 39
+THUMBSLIDE_Y = 34
+
+# Touchpad
+TOUCHPAD = 12 
+
+# Sound
+MIC = 35
+DAC = 26
+SPEAKER = 2
+
