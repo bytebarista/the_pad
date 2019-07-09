@@ -146,7 +146,7 @@ Note that the ili934xhax.py also requires glcdfont.py.
 Simple example, draws some boxes and writes some text:
 
 ```python
-from ili934xhax import ILI9341, color565n
+from ili934xhax import ILI9341, color565n, color565
 from machine import SPI, Pin
 
 display = ILI9341(spi,
