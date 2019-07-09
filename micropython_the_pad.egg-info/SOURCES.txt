@@ -1,6 +1,0 @@
-README.md
-setup.py
-micropython_the_pad.egg-info/PKG-INFO
-micropython_the_pad.egg-info/SOURCES.txt
-micropython_the_pad.egg-info/dependency_links.txt
-micropython_the_pad.egg-info/top_level.txt
