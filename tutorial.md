@@ -369,7 +369,7 @@ while True:
 Uses the display to show readings from the BME280 environmental sensor.
 
 ```python
-import temperature
+from the_pad.demos import temperature
 
 temperature.run()
 ```
@@ -379,7 +379,7 @@ temperature.run()
 A simple snake game written in micropython. Uses d-pad input and the display.
 
 ```python
-import snek
+from the_pad.demos import snek
 
 snek.run()
 ```
@@ -389,7 +389,7 @@ snek.run()
 A simple micropython tetris clone. D-pad to move bricks, left/right buttons to rotate bricks.
 
 ```python
-import tetrix
+from the_pad.demos import tetrix
 
 tetrix.run()
 ```
