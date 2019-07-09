@@ -75,6 +75,22 @@ led_show.run()
 
 If you are curious about the inner workings on these LEDs you can find the datasheet [here](https://cdn-shop.adafruit.com/datasheets/APA102.pdf) and the singal source code [here](https://github.com/bytebarista/iot_workshop/blob/master/src/led_lights.py)
 
+# TouchPad
+
+The ESP32 microcontroller has touch pin functionality:
+
+```python
+from machine import TouchPad, Pin
+
+touch = TouchPad(Pin(12))
+```
+
+Now do some readings while pushing the Bytebarista logo:
+
+```python
+touch.read()
+```
+
 # Component communication protocols
 
 For communication between components there are two major protocols worth mentioning: [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) and [I2C](https://en.wikipedia.org/wiki/I%C2%B2C)
