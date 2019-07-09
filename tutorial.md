@@ -139,7 +139,7 @@ with open('/sd/test.txt', 'r') as f:
     print(f.read())
 ```
 
-### The Display ([official](https://github.com/jeffmer/micropython-ili9341), [modified specifically for our display](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/ili934xhax.py))
+### The Display ([driver modified for our display](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/ili934xhax.py))
 
 Note that the ili934xhax.py also requires glcdfont.py.
 
@@ -364,7 +364,7 @@ while True:
 
 # Example micropython programs
 
-### Environmental sensor display [source](https://github.com/bytebarista/iot_workshop/blob/master/src/temperature.py)
+### Environmental sensor display [source](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/temperature.py)
 
 Uses the display to show readings from the BME280 environmental sensor.
 
@@ -374,7 +374,7 @@ import temperature
 temperature.run()
 ```
 
-### Snake game [source](https://github.com/bytebarista/iot_workshop/blob/master/src/snek.py)
+### Snake game [source](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/snek.py)
 
 A simple snake game written in micropython. Uses d-pad input and the display.
 
@@ -384,7 +384,7 @@ import snek
 snek.run()
 ```
 
-### Tetris clone [source](https://github.com/bytebarista/iot_workshop/blob/master/src/tetrix.py)
+### Tetris clone [source](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/tetrix.py)
 
 A simple micropython tetris clone. D-pad to move bricks, left/right buttons to rotate bricks.
 
@@ -395,7 +395,6 @@ tetrix.run()
 ```
 
 
-
 # Exercizes
 
 ### Explore the thumbslide
@@ -403,14 +402,13 @@ tetrix.run()
 * **The thumbslide** has many a quirk, and is not exemplified anywhere in this notebook. It has a dynamic range of "at rest" values for both x and y, which is not necessarily the same ranges. [ready-made thumbslide source](https://github.com/bytebarista/iot_workshop/blob/master/src/thumbslide.py)
   * You could make code to determine the state of the thumbslide to either be moved or not.
   * And/or you could calculate the angle it is held at *given* that it is moved.
-  * You can switch out the check for "PAD_DOWN_PRESSED" in the tetrix game with an angle check for the thumbslide.
-  * Or, switch out the whole pad control for pac-main with the thumbslide.
+  * Or, switch out the whole pad control for the Snake game with the thumbslide.
 
 ### Explore the speaker
 * **The Speaker** can do a little bit more than just buzzzz uncomfortably.
   * The boot sequence could make a "boot complete" audio(-visual?) signal on completion.
   * The inputs could make different beeps on press ([note frequencies](http://pages.mtu.edu/~suits/notefreqs.html))
-  * Pac-main and Tetrix are both silent gaming experiences, they could make use of some beeps and plings and buzzzzzes.
+  * Snake and Tetrix are both silent gaming experiences, they could make use of some beeps and plings and buzzzzzes.
   * The sound could make use of a simple Low Frequency Oscillator ([LFO](https://en.wikipedia.org/wiki/Low-frequency_oscillation)) add-on to the example to give it a bit more "emotional range".
 
 ### Ball game exercize
