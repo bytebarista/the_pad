@@ -1,9 +1,9 @@
-from ili934xhax import ILI9341, color565, color565n
+from the_pad.ili934xhax import ILI9341, color565, color565n
 from machine import SPI, Pin, I2C
-import mcpnew
+import the_pad.mcpnew as mcpnew
 import framebuf
 import random
-import bme280_int
+import the_pad.bme280_int as bme280_int
 
 spi = SPI(
     2,
