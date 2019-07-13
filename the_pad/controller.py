@@ -6,7 +6,8 @@ from machine import Pin, ADC, I2C
 from the_pad import pins
 
 
-__all__ = ['ThumbSlide', 'DPad', 'Buttons']
+__all__ = ['ThumbSlide', 'DPad', 'Buttons',
+           'configure_directional_controllers']
 
 
 #: Maximum discreet value from ADC.
