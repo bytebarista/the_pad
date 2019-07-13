@@ -2,7 +2,7 @@
 High level access to buttons, thumb stick and .
 """
 import mcpnew
-from machine import Pin, ADC
+from machine import Pin, ADC, I2C
 from the_pad import pins
 
 #: Maximum discreet value from ADC.
@@ -10,7 +10,6 @@ MAX_RAW_VALUE = 4096
 
 #: Factor to normalize values from ADC to range between -1.0 and 1.0.
 _RAW_NORMALIZER = (MAX_RAW_VALUE / 2) - 0.5
-
 
 #: Factor to convert original output from ADC to int value between 0 and MAX_RAW_VALUE.
 _RAW_FACTOR = 256 / MAX_RAW_VALUE
@@ -78,6 +77,7 @@ class ThumbSlide(object):
     @property
     def is_right(self):
         return self.x > self.discreet_threshold
+
 
 class Buttons:
     """Controller class for the 4 buttons on the right hand side.
@@ -178,4 +178,3 @@ class Buttons:
             buttons.append('LEFT')
 
         return buttons
-
