@@ -5,6 +5,10 @@ import mcpnew
 from machine import Pin, ADC, I2C
 from the_pad import pins
 
+
+__all__ = ['ThumbSlide', 'DPad', 'Buttons']
+
+
 #: Maximum discreet value from ADC.
 MAX_RAW_VALUE = 4096
 
@@ -79,7 +83,53 @@ class ThumbSlide(object):
         return self.x > self.discreet_threshold
 
 
-class Buttons:
+class BaseButtonController:
+
+    PINS = []
+
+    def __init__(self, io_handler=None):
+        self.io_handler = _setup_io(io_handler, self.PINS)
+
+    @property
+    def is_up(self):
+        raise NotImplementedError()
+
+    @property
+    def is_down(self):
+        raise NotImplementedError()
+
+    @property
+    def is_right(self):
+       raise NotImplementedError()
+
+    @property
+    def is_left(self):
+        raise NotImplementedError()
+
+    def get_all(self):
+        """Get all buttons that are pressed.
+
+        Returns
+        -------
+        set of str
+            With all the buttons that where pressed.
+
+        """
+        buttons = set()
+
+        if self.is_up:
+            buttons.add('UP')
+        if self.is_down:
+            buttons.add('DOWN')
+        if self.is_right:
+            buttons.add('RIGHT')
+        if self.is_left:
+            buttons.add('LEFT')
+
+        return buttons
+
+
+class Buttons(BaseButtonController):
     """Controller class for the 4 buttons on the right hand side.
 
     Parameters
@@ -96,21 +146,8 @@ class Buttons:
     BUTTON_DOWN = 4
     PINS = [BUTTON_LEFT, BUTTON_RIGHT, BUTTON_UP, BUTTON_DOWN]
 
-    def __init__(self, io_handler=None):
-        self.io_handler = io_handler
-        self._setup()
-
-    def _setup(self):
-        if self.io_handler is None:
-            i2c = I2C(scl=Pin(pins.I2C_SCL), sda=Pin(pins.I2C_SDA))
-            self.io_handler = mcpnew.MCP23017(i2c)
-
-        for pin in self.PINS:
-            self.io_handler.setup(pin, mcpnew.IN)
-            self.io_handler.pullup(pin, True)
-
     @property
-    def up(self):
+    def is_up(self):
         """Check if the up button is pressed.
 
         Returns
@@ -122,7 +159,7 @@ class Buttons:
         return not self.io_handler.input(self.BUTTON_UP)
 
     @property
-    def down(self):
+    def is_down(self):
         """Check if the down button is pressed.
 
         Returns
@@ -134,7 +171,7 @@ class Buttons:
         return not self.io_handler.input(self.BUTTON_DOWN)
 
     @property
-    def right(self):
+    def is_right(self):
         """Check if the right button is pressed.
 
         Returns
@@ -146,7 +183,7 @@ class Buttons:
         return not self.io_handler.input(self.BUTTON_RIGHT)
 
     @property
-    def left(self):
+    def is_left(self):
         """Check if the left button is pressed.
 
         Returns
@@ -157,24 +194,98 @@ class Buttons:
         """
         return not self.io_handler.input(self.BUTTON_LEFT)
 
-    def get_all(self):
-        """Get all buttons that are pressed.
+
+class DPad(BaseButtonController):
+
+    PIN_LEFT = 9
+    PIN_RIGHT = 10
+    PIN_UP = 8
+    PIN_DOWN = 11
+    PINS = [PIN_LEFT, PIN_RIGHT, PIN_UP, PIN_DOWN]
+
+    @property
+    def is_up(self):
+        """Check if the up button is pressed.
 
         Returns
         -------
-        list of str
-            With all the buttons that where pressed.
+        bool
+            Whether the button is pressed or not.
 
         """
-        buttons = []
+        return not self.io_handler.input(self.PIN_UP)
 
-        if self.up:
-            buttons.append('UP')
-        if self.down:
-            buttons.append('DOWN')
-        if self.right:
-            buttons.append('RIGHT')
-        if self.left:
-            buttons.append('LEFT')
+    @property
+    def is_down(self):
+        """Check if the down button is pressed.
 
-        return buttons
+        Returns
+        -------
+        bool
+            Whether the button is pressed or not.
+
+        """
+        return not self.io_handler.input(self.PIN_DOWN)
+
+    @property
+    def is_right(self):
+        """Check if the right button is pressed.
+
+        Returns
+        -------
+        bool
+            Whether the button is pressed or not.
+
+        """
+        return not self.io_handler.input(self.PIN_RIGHT)
+
+    @property
+    def is_left(self):
+        """Check if the left button is pressed.
+
+        Returns
+        -------
+        bool
+            Whether the button is pressed or not.
+
+        """
+        return not self.io_handler.input(self.PIN_LEFT)
+
+
+def _setup_io(io_handler, use_pins):
+    if io_handler is None:
+        i2c = I2C(scl=Pin(pins.I2C_SCL), sda=Pin(pins.I2C_SDA))
+        io_handler = mcpnew.MCP23017(i2c)
+
+    for pin in use_pins:
+        io_handler.setup(pin, mcpnew.IN)
+        io_handler.pullup(pin, True)
+
+    return io_handler
+
+
+def configure_directional_controllers(io_handler=None, discreet_threshold=0.7):
+    """Configure all directional controllers.
+
+    Parameters
+    ----------
+    io_handler: mcpnew.MCP
+        The MCP I/O handler used by the buttons. If `None`, it will be
+        configured automatically using the defaults. Default `None`.
+    discreet_threshold: float
+        Threshold value used by the thumbslide
+
+    Returns
+    -------
+    ThumbSlide
+    Buttons
+    DPad
+        All with the appropriate configurations.
+
+    """
+
+    thumbslide = ThumbSlide(discreet_threshold)
+    buttons = Buttons(io_handler)
+    dpad = DPad(buttons.io_handler)
+
+    return thumbslide, buttons, dpad
