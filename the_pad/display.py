@@ -9,7 +9,7 @@ DEFAULT_RES = (240, 320)
 DEFAULT_BACKGROUND = (0, 0, 0)
 
 
-def setup(res=None, background=None, framebuf=False):
+def setup(res=None, background=None, framebuf=False, write_only=True):
     """Initiate and setup the pad's display.
 
     Parameters
@@ -21,7 +21,10 @@ def setup(res=None, background=None, framebuf=False):
         Represents the initial background color of the screen, as a (r, g, b)
         tuple. If `None`, it will default to (0, 0, 0). Default `None`.
     framebuf: bool
-        Whether the micropython's framebuf module is in use or not.
+        Whether the micropython's framebuf module is in use or not. Default
+        `False`.
+    write_only: bool
+        Whether the screen is supposed to be write-only or not. Default `True`.
 
     Returns
     -------
@@ -39,9 +42,12 @@ def setup(res=None, background=None, framebuf=False):
         color_fn = ili934xhax.color565
     else:
         color_fn = ili934xhax.color565n
-
-    spi = SPI(2, baudrate=40000000, miso=Pin(pins.SPI_MISO),
-              mosi=Pin(pins.SPI_MOSI), sck=Pin(pins.SPI_CLK))
+    if not write_only:
+        spi = SPI(2, baudrate=40000000, miso=Pin(pins.SPI_MISO),
+                  mosi=Pin(pins.SPI_MOSI), sck=Pin(pins.SPI_CLK))
+    else:
+        spi = SPI(2, baudrate=40000000, mosi=Pin(pins.SPI_MOSI),
+                  sck=Pin(pins.SPI_CLK))
 
     display = ili934xhax.ILI9341(spi, cs=Pin(0), dc=Pin(15), rst=Pin(5))
 
