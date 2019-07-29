@@ -75,6 +75,22 @@ led_show.run()
 
 If you are curious about the inner workings on these LEDs you can find the datasheet [here](https://cdn-shop.adafruit.com/datasheets/APA102.pdf) and the singal source code [here](https://github.com/bytebarista/iot_workshop/blob/master/src/led_lights.py)
 
+# TouchPad
+
+The ESP32 microcontroller has touch pin functionality:
+
+```python
+from machine import TouchPad, Pin
+
+touch = TouchPad(Pin(12))
+```
+
+Now do some readings while pushing the Bytebarista logo:
+
+```python
+touch.read()
+```
+
 # Component communication protocols
 
 For communication between components there are two major protocols worth mentioning: [SPI](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) and [I2C](https://en.wikipedia.org/wiki/I%C2%B2C)
@@ -139,14 +155,14 @@ with open('/sd/test.txt', 'r') as f:
     print(f.read())
 ```
 
-### The Display ([official](https://github.com/jeffmer/micropython-ili9341), [modified specifically for our display](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/ili934xhax.py))
+### The Display ([driver modified for our display](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/ili934xhax.py))
 
 Note that the ili934xhax.py also requires glcdfont.py.
 
 Simple example, draws some boxes and writes some text:
 
 ```python
-from ili934xhax import ILI9341, color565n
+from ili934xhax import ILI9341, color565n, color565
 from machine import SPI, Pin
 
 display = ILI9341(spi,
@@ -364,36 +380,35 @@ while True:
 
 # Example micropython programs
 
-### Environmental sensor display [source](https://github.com/bytebarista/iot_workshop/blob/master/src/temperature.py)
+### Environmental sensor display [source](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/temperature.py)
 
 Uses the display to show readings from the BME280 environmental sensor.
 
 ```python
-import temperature
+from the_pad.demos import temperature
 
 temperature.run()
 ```
 
-### Snake game [source](https://github.com/bytebarista/iot_workshop/blob/master/src/snek.py)
+### Snake game [source](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/snek.py)
 
 A simple snake game written in micropython. Uses d-pad input and the display.
 
 ```python
-import snek
+from the_pad.demos import snek
 
 snek.run()
 ```
 
-### Tetris clone [source](https://github.com/bytebarista/iot_workshop/blob/master/src/tetrix.py)
+### Tetris clone [source](https://github.com/bytebarista/the_pad/blob/master/the_pad/demos/tetrix.py)
 
 A simple micropython tetris clone. D-pad to move bricks, left/right buttons to rotate bricks.
 
 ```python
-import tetrix
+from the_pad.demos import tetrix
 
 tetrix.run()
 ```
-
 
 
 # Exercizes
@@ -403,14 +418,13 @@ tetrix.run()
 * **The thumbslide** has many a quirk, and is not exemplified anywhere in this notebook. It has a dynamic range of "at rest" values for both x and y, which is not necessarily the same ranges. [ready-made thumbslide source](https://github.com/bytebarista/iot_workshop/blob/master/src/thumbslide.py)
   * You could make code to determine the state of the thumbslide to either be moved or not.
   * And/or you could calculate the angle it is held at *given* that it is moved.
-  * You can switch out the check for "PAD_DOWN_PRESSED" in the tetrix game with an angle check for the thumbslide.
-  * Or, switch out the whole pad control for pac-main with the thumbslide.
+  * Or, switch out the whole pad control for the Snake game with the thumbslide.
 
 ### Explore the speaker
 * **The Speaker** can do a little bit more than just buzzzz uncomfortably.
   * The boot sequence could make a "boot complete" audio(-visual?) signal on completion.
   * The inputs could make different beeps on press ([note frequencies](http://pages.mtu.edu/~suits/notefreqs.html))
-  * Pac-main and Tetrix are both silent gaming experiences, they could make use of some beeps and plings and buzzzzzes.
+  * Snake and Tetrix are both silent gaming experiences, they could make use of some beeps and plings and buzzzzzes.
   * The sound could make use of a simple Low Frequency Oscillator ([LFO](https://en.wikipedia.org/wiki/Low-frequency_oscillation)) add-on to the example to give it a bit more "emotional range".
 
 ### Ball game exercize

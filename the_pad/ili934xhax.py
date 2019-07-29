@@ -51,10 +51,16 @@ _CHUNK = const(1024)  # maximum number of pixels per spi write
 
 
 def color565(r, g, b):
+    """
+    Returns swapped 16 bit color - for use with micropython framebuf module
+    """
     return swap16((r & 0xf8) << 8 | (g & 0xfc) << 3 | b >> 3)
 
 
 def swap16(i):
+    """
+    Returns normal 16 bit color - for use with display driver directly
+    """
     return ustruct.unpack("<H", ustruct.pack(">H", i))[0]
 
 
