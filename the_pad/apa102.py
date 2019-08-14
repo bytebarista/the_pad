@@ -1,6 +1,5 @@
 from machine import Pin, SPI
 
-
 class APA102:
 
     #XXX not used yet - do we need it?
@@ -20,7 +19,7 @@ class APA102:
         # color is 4d array (last item is brightness)
         # brightness is 5Bit
         if not (0 <= color[3] <= 31):
-            raise ValueError("Invalid brightness! Values: 0(off) to 31(full)")
+            raise ValueError("Invalid brightness! 0(off) to 31(full)")
         self.leds[index] = color
         self.write()
 
