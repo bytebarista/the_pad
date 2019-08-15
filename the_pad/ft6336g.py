@@ -6,20 +6,33 @@ REG_NUMTOUCHES = 0x02
 
 
 class FT6336G:
+    """
+    Driver for the FT6336G touch panel.
+    """
     def __init__(self, i2c, address=DEFAULT_I2C_ADDR):
         self._i2c = i2c
         self._address = address
 
     @property
     def touched_count(self):
+        """
+        Current number of touch events.
+        :return: 0, 1 or 2
+        """
         return self._read(REG_NUMTOUCHES, 1)[0]
 
     @property
     def touches(self):
-        if not self.touched_count:
-            return None
-
+        """
+        x and y coordinates for touch events. FT6336G supports up to two simultaneous touch events.
+        Returns empty list if there is no touch.
+        :return: list of (x,y) tuples.
+        """
         points = []
+
+        if not self.touched_count:
+            return points
+
         data = self._read(REG_DATA, 32)
 
         for i in range(2):
@@ -34,6 +47,12 @@ class FT6336G:
         return points
 
     def _read(self, register, length):
+        """
+        Reads *length* bytes over i2c.
+        :param register: byte register
+        :param length: number of bytes to read
+        :return: filled bytearray
+        """
         self._i2c.writeto(self._address, bytes([register & 0xFF]))
         result = bytearray(length)
         self._i2c.readfrom_into(self._address, result)
