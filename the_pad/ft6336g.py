@@ -1,13 +1,12 @@
 import ustruct as struct
 
-
 DEFAULT_I2C_ADDR = 0x38
 REG_DATA = 0x00
 REG_NUMTOUCHES = 0x02
 
 
 class FT6336G:
-    def __init__(self, i2c, address = DEFAULT_I2C_ADDR):
+    def __init__(self, i2c, address=DEFAULT_I2C_ADDR):
         self._i2c = i2c
         self._address = address
 
@@ -17,14 +16,14 @@ class FT6336G:
 
     @property
     def touches(self):
-    	if not self.touched_count:
-    		return None
+        if not self.touched_count:
+            return None
 
         points = []
         data = self._read(REG_DATA, 32)
-        
+
         for i in range(2):
-            point = data[i*6+3 : i*6+9]
+            point = data[i * 6 + 3: i * 6 + 9]
             if all([i == 0xFF for i in point]):
                 continue
             x, y = struct.unpack('>HH', point)
@@ -42,9 +41,9 @@ class FT6336G:
 
 
 def main():
-	from machine import Pin, I2C
+    from machine import Pin, I2C
 
-	i2c = I2C(scl=Pin(27), sda=Pin(32))
-	ft6336g = FT6336G(i2c)
-	while True:
-		print(ft6336g.touches)
+    i2c = I2C(scl=Pin(27), sda=Pin(32))
+    ft6336g = FT6336G(i2c)
+    while True:
+        print(ft6336g.touches)
