@@ -75,6 +75,40 @@ led_show.run()
 
 If you are curious about the inner workings on these LEDs you can find the datasheet [here](https://cdn-shop.adafruit.com/datasheets/APA102.pdf) and the singal source code [here](https://github.com/bytebarista/iot_workshop/blob/master/src/led_lights.py)
 
+### Controlling APA102 LEDs
+
+APA102 LEDs, also known as DotStar LEDs, are individually addressable full-colour RGB LEDs, generally in a string formation. They differ from NeoPixels in that they require two pins to control - both a Clock and Data pin.  They can operate at a much higher data and PWM frequencies than NeoPixels and
+are more suitable for persistence-of-vision effects.
+
+To create an APA102 object do the following::
+
+```
+    >>> import machine, apa102
+    >>> spi = SPI(2, sck=Pin(13), mosi=Pin(4), miso=Pin(12))
+    >>> strip = APA102(spi, 4)
+```
+
+This configures an 4 pixel APA102 strip.
+
+The RGB colour data, as well as a brightness level, is sent to the APA102 in a certain order ``(Red, Green, Blue, Brightness)``.
+
+To set the colour of pixels use::
+
+```
+    >>> strip[0] = (255, 255, 255, 31) # set to white, full brightness
+    >>> strip[1] = (255, 0, 0, 31) # set to red, full brightness
+    >>> strip[2] = (0, 255, 0, 15) # set to green, half brightness
+    >>> strip[3] = (0, 0, 255, 7)  # set to blue, quarter brightness
+```
+
+Use the ``write()`` method to output the colours to the LEDs::
+
+    >>> strip.write()
+
+Demonstration::
+
+[play with apa102 strip](the_pad/demos/apa102_strip.py)
+
 # TouchPad
 
 The ESP32 microcontroller has touch pin functionality:

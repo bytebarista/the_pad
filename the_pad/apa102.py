@@ -1,8 +1,6 @@
-from machine import Pin, SPI
-
 class APA102:
 
-    #XXX not used yet - do we need it?
+    #XXX not used yet - do we need it? See micropython code for ESP8266.
     ORDER = (0, 1, 2, 3)
 
     leds = []
@@ -21,7 +19,6 @@ class APA102:
         if not (0 <= color[3] <= 31):
             raise ValueError("Invalid brightness! 0(off) to 31(full)")
         self.leds[index] = color
-        self.write()
 
     def __getitem__(self, index):
         return self.leds[index]
@@ -57,11 +54,3 @@ class APA102:
             self._send_single(self.leds[i])
 
         self._end_frame()
-
-
-def main():
-    led = APA102(SPI(2, sck=Pin(13), mosi=Pin(4), miso=Pin(12)), n=4)
-    led[0] = [255, 0, 0, 31]
-    led[1] = [0, 255, 0, 31]
-    led[2] = [0, 0, 255, 31]
-    led[3] = [255, 255, 0, 31]
