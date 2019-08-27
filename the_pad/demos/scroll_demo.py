@@ -115,36 +115,36 @@ class tilemanager(object):
         self.rowbufmv = memoryview(self.rowbuf)
 
     def generatelevel(self): #just decides which blocks are placed where
-        for a in range(0, 255):
-            for b in range(0, self.numblockshoriz):
-                ram = random.randint(0, 12)
+        for y in range(0, self.levelheight):
+            for x in range(0, self.numblockshoriz):
+                block_id = random.randint(0, 12)
 
-                if ram > 3:
-                    ram = 0
+                if block_id > 3:
+                    block_id = 0
 
-                if a < 2:
-                    ram = 1
+                if y < 2:
+                    block_id = 1
 
                 #bytebarista logo
-                if 72 > a > 50:
-                    ram = 0
+                if 72 > y > 50:
+                    block_id = 0
 
-                    if 2 < b < 12 and 64 < a < 71:
-                        ram = 2
+                    if 2 < x < 12 and 64 < y < 71:
+                        block_id = 2
 
-                    if 1 < b < 13 and 67 < a < 70:
-                        ram = 2
+                    if 1 < x < 13 and 67 < y < 70:
+                        block_id = 2
 
-                    if 2 < b < 12 and 59 < a < 65:
-                        ram = 1
+                    if 2 < x < 12 and 59 < y < 65:
+                        block_id = 1
 
-                    if 3 < b < 11 and 57 < a < 60:
-                        ram = 1
+                    if 3 < x < 11 and 57 < y < 60:
+                        block_id = 1
 
-                    if 3 < b < 11 and 53 < a < 58:
-                        ram = 2
+                    if 3 < x < 11 and 53 < y < 58:
+                        block_id = 2
 
-                self.setblock(b, a, ram)
+                self.setblock(x, y, block_id)
 
         #B in ByteBarista logo
         self.setblock(6, 63, 0)
@@ -160,26 +160,26 @@ class tilemanager(object):
         self.setblock(8, 62, 0)
         self.setblock(8, 60, 0)
 
-    def setblock(self, x, y, id):
-        self.level[y * 15 + x] = id
+    def setblock(self, x, y, block_id):
+        self.level[y * self.numblockshoriz + x] = block_id
 
     def filldrawbuf(self, rownum): #row 0 is bottom
         #fills row draw buffer with tiles from row rownum
         transparent = color565n(255, 0, 255)
-
-        for b in range(0, self.numblockshoriz):
-            tileid = self.level[rownum * 15 + b]
-            bsize = self.blocksize
-            self.frowbuf.blit(self.tiles[tileid], b*bsize, 0, transparent)
+        bsize = self.blocksize
+        numblockshoriz = self.numblockshoriz
+        for x in range(0, numblockshoriz):
+            tileid = self.level[rownum * numblockshoriz + x]
+            self.frowbuf.blit(self.tiles[tileid], x*bsize, 0, transparent)
 
     def drawdrawbuf(self, rownum): #row 0 is bottom
         #draws the row draw buffer at position y
         self.display._writeblock(0, 320 - ((rownum+1) * self.blocksize), 240, 320 - ((rownum) * self.blocksize), self.rowbuf)
 
     def renderlevel(self): #renders whole level, used at start
-        for a in range(self.scrolled, self.scrolled + self.numblocksvert):
-            self.filldrawbuf(a)
-            self.drawdrawbuf(a)
+        for y in range(self.scrolled, self.scrolled + self.numblocksvert):
+            self.filldrawbuf(y)
+            self.drawdrawbuf(y)
 
         self.filldrawbuf(self.numblocksvert+1) #next line to show
 
