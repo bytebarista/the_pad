@@ -1,5 +1,7 @@
 # the_pad
 
+[![PyPI version](https://badge.fury.io/py/micropython-the-pad.svg)](https://badge.fury.io/py/micropython-the-pad)
+
 Have a look at our [**tutorial**](/tutorial.md) to get started!
 
 ## Install
