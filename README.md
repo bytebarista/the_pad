@@ -2,6 +2,8 @@
 
 [![PyPI version](https://badge.fury.io/py/micropython-the-pad.svg)](https://badge.fury.io/py/micropython-the-pad)
 
+![the_pad](https://bytebarista.com/content/images/2019/10/thepad_3.jpg)
+
 Have a look at our [**tutorial**](/tutorial.md) to get started!
 
 ## Install
