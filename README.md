@@ -1,5 +1,7 @@
 # the_pad
 
+Have a look at our [**tutorial**](/tutorial.md) to get started!
+
 ## Install
 
 You can install as package from pip.
