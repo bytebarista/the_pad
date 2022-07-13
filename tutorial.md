@@ -1,5 +1,7 @@
 
-# To get started look at the Getting Started links in our [wiki](https://github.com/bytebarista/iot_workshop/wiki):
+### Before anything!
+
+Look at the Getting Started links in our [wiki](https://github.com/bytebarista/iot_workshop/wiki).
 
 
 ### When setup and connected to your device
